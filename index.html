@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Изложение: микротемы и ключевые слова при прослушивании</title>
+<link href="https://fonts.googleapis.com/css2?family=Alegreya:wght@600;800&family=Nunito:wght@400;600;800&display=swap" rel="stylesheet">
+<style>
+:root{--icy:#AED5F5;--azure:#367ADF;--sky:#4FACE5;--french:#394988;--char:#353A4C;--pale:#EEF6FD;--ok:#2E9E6B;--bad:#D9534F;
+color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+*,*::before,*::after{box-sizing:inherit}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+body{margin:0;background:#fff;color:var(--char);font:400 18px/1.6 Nunito,system-ui,sans-serif}
+h1,h2,h3{font-family:Alegreya,Georgia,serif;margin:0;line-height:1.15}
+main{max-width:860px;margin:0 auto;padding:28px 18px 60px}
+.star{width:1em;height:1em;flex:none}
+header{text-align:center;padding:30px 0 10px}
+h1{font-size:clamp(32px,6.5vw,52px);color:var(--french);font-weight:800}
+.sub{color:var(--azure);font-weight:600;margin-top:10px}
+section{margin-top:54px}
+h2{font-size:clamp(28px,5vw,38px);color:var(--french);display:flex;gap:12px;align-items:center;font-weight:800}
+h2 .star{color:var(--sky);width:.8em;height:.8em}
+.lead{color:#59627a;margin:8px 0 22px}
+.row{display:flex;gap:10px;margin-bottom:10px}
+.tile{width:84px;flex:none;border-radius:18px;display:grid;place-items:center;font-size:36px}
+.bar{flex:1;border-radius:18px;padding:14px 20px}
+.bar h3{font-size:24px}
+.bar p{margin:2px 0 0;font-size:16px}
+.r1 .tile,.r1 .bar{background:var(--icy)}.r1 .tile{color:var(--azure)}.r1 h3{color:var(--azure)}
+.r2 .tile,.r2 .bar{background:var(--azure)}.r2 .tile{color:var(--char)}.r2 .bar{color:#fff}.r2 h3{color:#fff}
+.r3 .tile,.r3 .bar{background:var(--sky)}.r3 .tile{color:var(--char)}.r3 .bar{color:#0f2236}.r3 h3{color:#0f2236}
+.r4 .tile,.r4 .bar{background:var(--french)}.r4 .tile{color:var(--icy)}.r4 .bar{color:#E6EEFA}.r4 h3{color:var(--icy)}
+.r5 .tile,.r5 .bar{background:var(--char)}.r5 .tile{color:var(--sky)}.r5 .bar{color:#E3E8F2}.r5 h3{color:var(--sky)}
+.card{background:var(--pale);border:2px solid var(--icy);border-radius:22px;padding:20px 22px;margin:14px 0}
+.card h3{font-size:24px;color:var(--french);margin-bottom:6px}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:14px}
+.note{background:#fff;border-left:6px solid var(--sky);border-radius:0 14px 14px 0;padding:10px 16px;margin:12px 0}
+.trainer{background:#fff;border:2px solid var(--azure);border-radius:24px;padding:22px;text-align:center;margin:18px 0}
+.trainer .tag{color:var(--azure);font-weight:800;margin-bottom:6px}
+.btns{display:flex;justify-content:center;gap:10px;flex-wrap:wrap;margin:14px 0}
+button{font:800 20px Nunito,sans-serif;border:0;border-radius:16px;padding:12px 22px;background:var(--azure);color:#fff;cursor:pointer;min-width:56px}
+button:hover{background:var(--french)}
+button.alt{background:var(--icy);color:var(--french)}
+button:focus-visible,summary:focus-visible,.sn:focus-visible,.chip:focus-visible{outline:3px solid var(--french);outline-offset:2px}
+.msg{min-height:30px;font-weight:800}
+.msg.ok{color:var(--ok)}.msg.bad{color:var(--bad)}
+.score{color:#59627a;font-weight:600}
+ul.clean{list-style:none;padding:0;margin:8px 0}
+ul.clean li{padding:6px 0 6px 34px;position:relative;text-align:left}
+ul.clean li::before{content:"✦";position:absolute;left:4px;color:var(--sky)}
+details{background:var(--pale);border:2px solid var(--icy);border-radius:20px;padding:6px 20px;margin:14px 0}
+summary{cursor:pointer;font:800 22px Alegreya,serif;color:var(--french);padding:10px 0}
+.check label{display:flex;gap:12px;align-items:flex-start;padding:7px 0;cursor:pointer}
+.check input{width:22px;height:22px;accent-color:var(--azure);margin-top:4px;flex:none}
+.grade{display:inline-block;font:800 28px Alegreya,serif;color:#fff;background:var(--azure);border-radius:16px;padding:8px 22px;margin-top:8px}
+footer{margin-top:50px;border-radius:18px;background:var(--pale);color:var(--azure);text-align:center;padding:14px;font-weight:700}
+@media(max-width:520px){.tile{width:62px;font-size:28px}.bar{padding:12px 14px}}
+.hack{display:flex;gap:14px;align-items:flex-start;background:#fff;border:2px solid var(--icy);border-radius:20px;padding:14px 18px;margin:10px 0}
+.hack .n{flex:none;width:42px;height:42px;border-radius:14px;background:var(--azure);color:#fff;display:grid;place-items:center;font:800 22px Alegreya,serif}
+.hack:nth-child(even) .n{background:var(--sky);color:#0f2236}
+.hack b{color:var(--french)}
+.pills{display:flex;flex-wrap:wrap;gap:8px;margin:10px 0}
+.pills span{background:#fff;border:2px solid var(--icy);border-radius:999px;padding:4px 14px;font:800 22px Alegreya,serif;color:var(--french)}
+.pills.no span{text-decoration:line-through;text-decoration-color:var(--bad);color:#59627a}
+.chip{display:inline-block;margin:3px;padding:3px 10px;border-radius:10px;border:2px solid var(--icy);cursor:pointer;background:#fff;font-weight:600;font-size:18px}
+.chip.on{background:var(--azure);color:#fff;border-color:var(--azure)}
+/* segmentation */
+.text{text-align:left;font-size:19px;line-height:2}
+.sn{cursor:pointer;border-radius:8px;padding:2px 3px}
+.sn:hover{background:var(--icy)}
+.sn.cut::before{content:"//";color:var(--bad);font-weight:800;margin-right:6px}
+.sn.cut{background:#FFF1F0}
+.p{margin:8px 0;padding:10px 14px;background:#fff;border:1px solid var(--icy);border-radius:12px;text-align:left}
+.q{font-size:21px;text-align:left;background:var(--pale);border-radius:16px;padding:12px 16px;margin:10px 0}
+.opt{font:800 20px Alegreya,serif;padding:12px 20px}
+.opt.good{background:var(--ok);color:#fff}.opt.no{background:#FBE0DF;color:var(--bad)}
+.mt{display:grid;gap:8px;text-align:left}
+.mt label{font-weight:800;color:var(--french)}
+textarea{width:100%;font:inherit;border:2px solid var(--icy);border-radius:14px;padding:10px}
+table{width:100%;border-collapse:collapse;background:#fff;border-radius:14px;overflow:hidden;font-size:17px}
+th{background:var(--azure);color:#fff;text-align:left;padding:8px 12px;font-family:Alegreya,serif;font-size:20px}
+td{padding:8px 12px;border-top:1px solid var(--icy);vertical-align:top}
+.tw{overflow-x:auto}
+</style>
+</head>
+<body>
+<main>
+<svg width="0" height="0" style="position:absolute"><symbol id="s" viewBox="0 0 24 24"><path fill="currentColor" d="M12 0c.6 6.6 4.9 11.4 12 12-7.1.6-11.4 5.4-12 12-.6-6.6-4.9-11.4-12-12C7.100 11.400 11.400 6.600 12 0z"/></symbol></svg>
+
+<header>
+  <h1>Изложение: микротемы и ключевые слова</h1>
+  <div class="sub">Урок на 60 минут: учимся слушать текст и записывать главное</div>
+</header>
+
+<section style="margin-top:28px">
+  <h2><svg class="star"><use href="#s"/></svg>План урока</h2>
+  <p class="lead">Сначала учимся слышать части текста, потом выбирать слова, потом пробуем всё вместе.</p>
+  <div class="row r1"><div class="tile"><svg class="star"><use href="#s"/></svg></div><div class="bar"><h3>0–5 мин. Разминка</h3><p>Слушаем 7 слов и повторяем их по памяти</p></div></div>
+  <div class="row r2"><div class="tile"><svg class="star"><use href="#s"/></svg></div><div class="bar"><h3>5–17 мин. Микротема</h3><p>Что это, как её услышать, 2 тренажёра</p></div></div>
+  <div class="row r3"><div class="tile"><svg class="star"><use href="#s"/></svg></div><div class="bar"><h3>17–30 мин. Ключевые слова</h3><p>Что записывать, а что нет; сокращения; тренажёр</p></div></div>
+  <div class="row r4"><div class="tile"><svg class="star"><use href="#s"/></svg></div><div class="bar"><h3>30–50 мин. Слушаем текст</h3><p>Два прочтения, запись по микротемам, сверка с образцом</p></div></div>
+  <div class="row r5"><div class="tile"><svg class="star"><use href="#s"/></svg></div><div class="bar"><h3>50–60 мин. Итоги</h3><p>Чек-лист, самооценка, домашнее задание</p></div></div>
+  <div class="note"><b>Разминка.</b> Учитель читает слова один раз: <i>яблоко, река, портфель, тишина, шесть, Иван, зонт</i>. Ученики записывают то, что запомнили. Потом считаем: сколько слов удержали на слух? Это и есть задача изложения.</div>
+</section>
+
+<section>
+  <h2><svg class="star"><use href="#s"/></svg>Микротема</h2>
+  <p class="lead">Текст нельзя запомнить целиком. Зато можно запомнить его части.</p>
+  <div class="grid">
+    <div class="card"><h3>Тема текста</h3><p>О чём весь текст одним словом или словосочетанием: <i>первый снег</i>.</p></div>
+    <div class="card"><h3>Микротема</h3><p>О чём одна часть текста, обычно абзац: <i>ожидание снега</i>. Из микротем складывается план.</p></div>
+    <div class="card"><h3>Основная мысль</h3><p>Что хотел сказать автор: <i>ждать радостно, когда веришь в чудо</i>.</p></div>
+  </div>
+
+  <div class="card"><h3>Как услышать, что началась новая микротема</h3>
+    <p>Слушай, где меняется хотя бы одно из пяти:</p>
+    <div class="pills"><span>время</span><span>место</span><span>герой</span><span>действие</span><span>картина</span></div>
+    <p>Новую часть часто открывают слова-сигналы:</p>
+    <div class="pills"><span>однажды</span><span>потом</span><span>на следующий день</span><span>вдруг</span><span>тем временем</span><span>наконец</span></div>
+  </div>
+
+  <div class="hack"><div class="n">1</div><div><b>Задай вопрос к части.</b> «О чём эта часть?» Ответ в 2–4 слова и есть микротема.</div></div>
+  <div class="hack"><div class="n">2</div><div><b>Не слишком широко.</b> «Зима» подойдёт к любой части. Микротема должна описывать именно этот абзац.</div></div>
+  <div class="hack"><div class="n">3</div><div><b>Не слишком узко.</b> Одна деталь («морковный нос») не называет всю часть. Ищи то, что объединяет детали.</div></div>
+  <div class="hack"><div class="n">4</div><div><b>Лучше существительное.</b> «Ожидание снега», «снежное утро»: такие названия быстро писать и легко вспоминать.</div></div>
+  <div class="hack"><div class="n">5</div><div><b>Считай части.</b> Для небольшого текста обычно получается 3–5 микротем. Если вышло 10, ты дробишь слишком мелко.</div></div>
+
+  <div class="trainer">
+    <div class="tag">Тренажёр 1: найди границы микротем</div>
+    <p class="score" style="margin:0 0 8px">Нажимай на предложения, с которых начинается новая часть. Должно получиться две границы.</p>
+    <div class="text" id="seg"></div>
+    <div class="msg" id="sm"></div>
+    <div class="btns"><button id="sc">Проверить</button><button class="alt" id="sr">Сбросить</button></div>
+  </div>
+
+  <div class="trainer" id="q1">
+    <div class="tag">Тренажёр 2: выбери название микротемы</div>
+    <div class="q"></div><div class="btns opts"></div><div class="msg"></div>
+    <div class="btns"><button class="alt nx">Дальше</button></div><div class="score"></div>
+  </div>
+</section>
+
+<section>
+  <h2><svg class="star"><use href="#s"/></svg>Ключевые слова</h2>
+  <p class="lead">Ключевое слово — то, без чего часть теряет смысл. Остальное ты восстановишь сам.</p>
+  <div class="grid">
+    <div class="card"><h3>Записывай</h3><div class="pills"><span>имена</span><span>числа</span><span>даты</span><span>названия</span><span>главные действия</span><span>яркие детали</span></div></div>
+    <div class="card"><h3>Не записывай</h3><div class="pills no"><span>предлоги</span><span>союзы</span><span>частицы</span><span>повторы</span><span>«красивые» слова-украшения</span></div></div>
+  </div>
+
+  <div class="hack"><div class="n">1</div><div><b>3–6 слов на микротему.</b> Больше не успеешь записать, меньше не хватит для памяти.</div></div>
+  <div class="hack"><div class="n">2</div><div><b>Пиши начальной формой или обрывком:</b> «проснул., тишин., бел.». Главное, чтобы ты сам понял запись.</div></div>
+  <div class="hack"><div class="n">3</div><div><b>Один абзац — один столбик (или строка).</b> Между ними оставляй пустую строку: вдруг захочешь дописать.</div></div>
+  <div class="hack"><div class="n">4</div><div><b>Свои значки.</b> Стрелка → «пошёл», плюс «+» вместо «и», вопросик «?» для вопроса героя. Только понятные тебе.</div></div>
+  <div class="hack"><div class="n">5</div><div><b>Числа и имена пиши полностью и сразу.</b> Их потом не вспомнить.</div></div>
+  <div class="hack"><div class="n">6</div><div><b>Не пиши предложение целиком.</b> Пока ты дописываешь его до точки, текст уходит дальше.</div></div>
+
+  <div class="card"><h3>Пример: как предложение превращается в запись</h3>
+    <div class="tw"><table><tr><th>Услышали</th><th>Записали</th></tr>
+    <tr><td>Однажды Миша проснулся от непривычной тишины.</td><td>Миша, проснулся, тишина</td></tr>
+    <tr><td>За окном всё было белым: крыши, деревья, скамейка у подъезда.</td><td>всё белое</td></tr>
+    <tr><td>Он выбежал во двор в одних тапочках и замер.</td><td>выбежал, во двор, замер</td></tr></table></div>
+    <div class="note">Три перечисленных предмета («крыши, деревья, скамейка») можно заменить одним обобщением: «всё белое». Это уже элемент сжатия.</div>
+  </div>
+
+  <div class="trainer">
+    <div class="tag">Тренажёр 3: отметь ключевые слова</div>
+    <p class="score" style="margin:0 0 8px">Прочитай абзац и нажми на слова, которые стоит записать.</p>
+    <div class="text" id="kw"></div>
+    <div class="msg" id="km"></div>
+    <div class="btns"><button id="kc">Проверить</button><button class="alt" id="kr">Сбросить</button></div>
+  </div>
+</section>
+
+<section>
+  <h2><svg class="star"><use href="#s"/></svg>Слушаем текст</h2>
+  <p class="lead">Теперь всё вместе. Текст звучит дважды, и у каждого прослушивания своя задача.</p>
+
+  <div class="hack"><div class="n">1</div><div><b>Первое прослушивание: руки на коленях.</b> Не пиши. Улови тему, героев и места, где текст «поворачивает».</div></div>
+  <div class="hack"><div class="n">2</div><div><b>Пауза: 30 секунд.</b> Нарисуй линиями границы абзацев и придумай рабочие названия частей.</div></div>
+  <div class="hack"><div class="n">3</div><div><b>Второе прослушивание: записывай.</b> Под каждой микротемой — ключевые слова.</div></div>
+  <div class="hack"><div class="n">4</div><div><b>Проверь по плану.</b> Читая запись, постарайся пересказать каждую часть в 1–2 предложения. Где споткнулся, там не хватает слова.</div></div>
+
+  <div class="trainer">
+    <div class="tag">Практика: слушаем «Первый снег»</div>
+    <p class="score" style="margin:0 0 8px">Нажми кнопку и слушай. Если голос не звучит, пусть текст прочитает учитель или сосед.</p>
+    <div class="btns"><button id="r1">Прослушать 1-й раз</button><button class="alt" id="r2">Прослушать 2-й раз</button><button class="alt" id="rs">Стоп</button></div>
+    <div class="msg" id="rm"></div>
+    <div class="mt">
+      <label for="a1">Микротема 1 и ключевые слова</label><textarea id="a1" rows="2"></textarea>
+      <label for="a2">Микротема 2 и ключевые слова</label><textarea id="a2" rows="2"></textarea>
+      <label for="a3">Микротема 3 и ключевые слова</label><textarea id="a3" rows="2"></textarea>
+    </div>
+  </div>
+
+  <details>
+    <summary>Образец записи (открой после своей)</summary>
+    <div class="tw"><table><tr><th>Микротема</th><th>Ключевые слова</th></tr>
+    <tr><td>Ожидание снега</td><td>Миша, осень, окно, серый двор, бабушка: «не торопят»</td></tr>
+    <tr><td>Снежное утро</td><td>проснулся, тишина, всё белое, выбежал, замер</td></tr>
+    <tr><td>Снеговик во дворе</td><td>ребята, снежный ком, снеговик, нос-морковка, шляпа, вечер, солнце, «как из сахара»</td></tr></table></div>
+  </details>
+
+  <details>
+    <summary>Для учителя: текст целиком и как читать</summary>
+    <div class="p" id="full"></div>
+    <ul class="clean">
+      <li>Читай ровно, не слишком медленно, с короткой паузой на границе микротем.</li>
+      <li>Не подсказывай голосом названия частей.</li>
+      <li>После второго чтения дай 10 минут на запись и 5 на сверку в парах.</li>
+      <li>Разбор: сравните, какие границы и слова нашли разные пары, и почему.</li>
+    </ul>
+  </details>
+</section>
+
+<section>
+  <h2><svg class="star"><use href="#s"/></svg>Итоги</h2>
+  <p class="lead">Отметь то, что у тебя получилось на этом уроке.</p>
+  <div class="card check" id="chk">
+    <label><input type="checkbox">Я объясню, чем микротема отличается от темы текста.</label>
+    <label><input type="checkbox">Я слышу, где в тексте меняется время, место или герой.</label>
+    <label><input type="checkbox">Я называю микротему в 2–4 слова: не слишком широко и не слишком узко.</label>
+    <label><input type="checkbox">Я не записываю предлоги, союзы и украшения.</label>
+    <label><input type="checkbox">Я записываю имена и числа полностью.</label>
+    <label><input type="checkbox">По своей записи я смог пересказать каждую часть.</label>
+    <div class="grade" id="gr">Отметь пункты</div>
+  </div>
+
+  <div class="card"><h3>Домашнее задание</h3>
+    <ul class="clean">
+      <li>Послушай любой короткий текст (новости, отрывок из аудиокниги) и запиши его микротемы и ключевые слова.</li>
+      <li>Перечитай оригинал и сравни: какие важные слова ты пропустил?</li>
+      <li>Перескажи текст по своей записи вслух и засеки время: нужно уложиться в минуту.</li>
+    </ul>
+  </div>
+</section>
+
+<footer>Слушай части. Лови главные слова. Пиши коротко.</footer>
+</main>
+
+<script>
+const $=id=>document.getElementById(id);
+const shuffle=a=>{for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]]}return a};
+const S=['Всю осень Миша ждал первого снега.','Он каждое утро выглядывал в окно, но двор оставался серым и мокрым.','Бабушка улыбалась и говорила, что снег не любит, когда его торопят.',
+'Однажды Миша проснулся от непривычной тишины.','За окном всё было белым: крыши, деревья, скамейка у подъезда.','Он выбежал во двор в одних тапочках и замер.',
+'Потом Миша позвал соседских ребят, и они вместе скатали огромный снежный ком.','К обеду во дворе стоял снеговик с морковным носом и бабушкиной старой шляпой.','Вечером выглянуло солнце, и снеговик заблестел, как будто был сделан из сахара.'];
+const CUTS=[3,6];
+$('full').innerHTML=[S.slice(0,3),S.slice(3,6),S.slice(6)].map(p=>'<p style="margin:6px 0">'+p.join(' ')+'</p>').join('');
+
+/* 1. границы */
+(function(){const box=$('seg'),m=$('sm'),cut=new Set();
+ S.forEach((t,i)=>{const s=document.createElement('span');s.className='sn';s.textContent=t+' ';s.tabIndex=0;s.setAttribute('role','button');
+  const tg=()=>{if(i===0)return;cut.has(i)?cut.delete(i):cut.add(i);s.classList.toggle('cut');m.textContent='';m.className='msg'};
+  s.onclick=tg;s.onkeydown=e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();tg()}};box.appendChild(s)});
+ $('sc').onclick=()=>{const c=[...cut].sort((a,b)=>a-b),ok=c.length===2&&c[0]===CUTS[0]&&c[1]===CUTS[1];
+  m.className='msg '+(ok?'ok':'bad');
+  m.textContent=ok?'Верно! Герой тот же, но «Однажды» и «Потом» открывают новые части.':c.length!==2?'Отмечено границ: '+c.length+'. Нужно две.':'Почти. Ищи слова-сигналы и смену действия или времени.'};
+ $('sr').onclick=()=>{cut.clear();box.querySelectorAll('.sn').forEach(x=>x.classList.remove('cut'));m.textContent='';m.className='msg'}})();
+
+/* 2. названия микротем */
+(function(){const L=[
+ {q:S.slice(0,3).join(' '),o:['Ожидание первого снега','Зима','Бабушка улыбалась'],e:'«Зима» слишком широко, «Бабушка улыбалась» слишком узко: это одна деталь.'},
+ {q:S.slice(3,6).join(' '),o:['Снежное утро','Времена года','Тапочки'],e:'Название должно собирать все детали абзаца: тишину, белый двор и замершего героя.'},
+ {q:S.slice(6).join(' '),o:['Снеговик во дворе','Всё о снеге','Морковный нос'],e:'Нужно имя для всей части: лепка снеговика и результат.'}];
+ const r=$('q1'),q=r.querySelector('.q'),o=r.querySelector('.opts'),m=r.querySelector('.msg'),sc=r.querySelector('.score');let i=-1,ok=0,n=0,done;
+ function next(){i=(i+1)%L.length;const it=L[i];done=false;m.textContent='';m.className='msg';q.innerHTML='<i>'+it.q+'</i>';o.innerHTML='';
+  shuffle(it.o.slice()).forEach(t=>{const b=document.createElement('button');b.className='alt opt';b.textContent=t;
+   b.onclick=()=>{if(done)return;done=true;n++;const g=t===it.o[0];if(g)ok++;b.classList.add(g?'good':'no');m.className='msg '+(g?'ok':'bad');m.textContent=(g?'Верно! ':'Не то. Верно: «'+it.o[0]+'». ')+it.e;sc.textContent='Верно: '+ok+' из '+n};o.appendChild(b)})}
+ r.querySelector('.nx').onclick=next;next()})();
+
+/* 3. ключевые слова */
+(function(){const KEY=['Миша','проснулся','тишины','белым','выбежал','двор','замер'],cl=w=>w.replace(/[.,:;!?]/g,''),
+ box=$('kw'),m=$('km');
+ S.slice(3,6).join(' ').split(' ').forEach(w=>{const c=document.createElement('span');c.className='chip';c.textContent=w;c.tabIndex=0;c.setAttribute('role','button');
+  const tg=()=>{c.classList.toggle('on');m.textContent='';m.className='msg'};c.onclick=tg;c.onkeydown=e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();tg()}};box.appendChild(c)});
+ $('kc').onclick=()=>{const ch=[...box.children],on=ch.filter(c=>c.classList.contains('on')).map(c=>cl(c.textContent)),
+  hit=on.filter(w=>KEY.includes(w)),extra=on.filter(w=>!KEY.includes(w)),miss=KEY.filter(w=>!on.includes(w));
+  if(!extra.length&&!miss.length){m.className='msg ok';m.textContent='Отлично! Все 7 ключевых слов найдены, лишнего нет.';return}
+  m.className='msg bad';m.textContent='Найдено: '+hit.length+' из '+KEY.length+'.'+(extra.length?' Лишнее: '+extra.join(', ')+'.':'')+(miss.length?' Пропущено: '+miss.join(', ')+'.':'')};
+ $('kr').onclick=()=>{[...box.children].forEach(c=>c.classList.remove('on'));m.textContent='';m.className='msg'}})();
+
+/* 4. чтение вслух */
+(function(){const m=$('rm'),T=S.join(' ');
+ const say=n=>{if(!('speechSynthesis' in window)){m.className='msg bad';m.textContent='Озвучка недоступна. Пусть текст прочитает учитель.';return}
+  speechSynthesis.cancel();const u=new SpeechSynthesisUtterance(T);u.lang='ru-RU';u.rate=.9;speechSynthesis.speak(u);
+  m.className='msg ok';m.textContent=n===1?'1-й раз: только слушай, не пиши.':'2-й раз: записывай микротемы и ключевые слова.'};
+ $('r1').onclick=()=>say(1);$('r2').onclick=()=>say(2);$('rs').onclick=()=>{if('speechSynthesis' in window)speechSynthesis.cancel();m.textContent='';m.className='msg'}})();
+
+/* 5. чек-лист */
+(function(){const bs=[...$('chk').querySelectorAll('input')],g=$('gr');
+ const f=()=>{const n=bs.filter(b=>b.checked).length;g.textContent=n===0?'Отметь пункты':n+' из 6: '+(n===6?'отлично, ты готов к изложению':n>=4?'хорошо, повтори слабые пункты':'ещё потренируем')};
+ bs.forEach(b=>b.onchange=f)})();
+</script>
+</body>
+</html>
