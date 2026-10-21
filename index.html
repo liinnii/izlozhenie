@@ -37,6 +37,7 @@ h2 .star{color:var(--sky);width:.8em;height:.8em}
 .note{background:#fff;border-left:6px solid var(--sky);border-radius:0 14px 14px 0;padding:10px 16px;margin:12px 0}
 .trainer{background:#fff;border:2px solid var(--azure);border-radius:24px;padding:22px;text-align:center;margin:18px 0}
 .trainer .tag{color:var(--azure);font-weight:800;margin-bottom:6px}
+.trainer .cnt{color:#59627a;font-weight:700;font-size:16px;margin-bottom:6px}
 .btns{display:flex;justify-content:center;gap:10px;flex-wrap:wrap;margin:14px 0}
 button{font:800 20px Nunito,sans-serif;border:0;border-radius:16px;padding:12px 22px;background:var(--azure);color:#fff;cursor:pointer;min-width:56px}
 button:hover{background:var(--french)}
@@ -125,16 +126,19 @@ td{padding:8px 12px;border-top:1px solid var(--icy);vertical-align:top}
   <div class="hack"><div class="n">4</div><div><b>Лучше существительное.</b> «Ожидание снега», «снежное утро»: такие названия быстро писать и легко вспоминать.</div></div>
   <div class="hack"><div class="n">5</div><div><b>Считай части.</b> Для небольшого текста обычно получается 3–5 микротем. Если вышло 10, ты дробишь слишком мелко.</div></div>
 
-  <div class="trainer">
+  <div class="trainer" id="t1">
     <div class="tag">Тренажёр 1: найди границы микротем</div>
-    <p class="score" style="margin:0 0 8px">Нажимай на предложения, с которых начинается новая часть. Должно получиться две границы.</p>
-    <div class="text" id="seg"></div>
-    <div class="msg" id="sm"></div>
-    <div class="btns"><button id="sc">Проверить</button><button class="alt" id="sr">Сбросить</button></div>
+    <div class="cnt"></div>
+    <p class="score" style="margin:0 0 8px"></p>
+    <div class="text"></div>
+    <div class="msg"></div>
+    <div class="btns"><button class="chk1">Проверить</button><button class="alt rs1">Сбросить</button><button class="alt nx1">Дальше</button></div>
+    <div class="score sc1"></div>
   </div>
 
   <div class="trainer" id="q1">
     <div class="tag">Тренажёр 2: выбери название микротемы</div>
+    <div class="cnt"></div>
     <div class="q"></div><div class="btns opts"></div><div class="msg"></div>
     <div class="btns"><button class="alt nx">Дальше</button></div><div class="score"></div>
   </div>
@@ -163,12 +167,14 @@ td{padding:8px 12px;border-top:1px solid var(--icy);vertical-align:top}
     <div class="note">Три перечисленных предмета («крыши, деревья, скамейка») можно заменить одним обобщением: «всё белое». Это уже элемент сжатия.</div>
   </div>
 
-  <div class="trainer">
+  <div class="trainer" id="t3">
     <div class="tag">Тренажёр 3: отметь ключевые слова</div>
-    <p class="score" style="margin:0 0 8px">Прочитай абзац и нажми на слова, которые стоит записать.</p>
-    <div class="text" id="kw"></div>
-    <div class="msg" id="km"></div>
-    <div class="btns"><button id="kc">Проверить</button><button class="alt" id="kr">Сбросить</button></div>
+    <div class="cnt"></div>
+    <p class="score" style="margin:0 0 8px">Прочитай абзац и нажми на слова, которые стоит записать. Найти нужно все важные слова; одно-два лишних не страшно.</p>
+    <div class="text kwbox"></div>
+    <div class="msg"></div>
+    <div class="btns"><button class="chk3">Проверить</button><button class="alt rs3">Сбросить</button><button class="alt nx3">Дальше</button></div>
+    <div class="score sc3"></div>
   </div>
 </section>
 
@@ -241,48 +247,122 @@ td{padding:8px 12px;border-top:1px solid var(--icy);vertical-align:top}
 <script>
 const $=id=>document.getElementById(id);
 const shuffle=a=>{for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]]}return a};
+
+/* Текст для практики и первого блока */
 const S=['Всю осень Миша ждал первого снега.','Он каждое утро выглядывал в окно, но двор оставался серым и мокрым.','Бабушка улыбалась и говорила, что снег не любит, когда его торопят.',
 'Однажды Миша проснулся от непривычной тишины.','За окном всё было белым: крыши, деревья, скамейка у подъезда.','Он выбежал во двор в одних тапочках и замер.',
 'Потом Миша позвал соседских ребят, и они вместе скатали огромный снежный ком.','К обеду во дворе стоял снеговик с морковным носом и бабушкиной старой шляпой.','Вечером выглянуло солнце, и снеговик заблестел, как будто был сделан из сахара.'];
-const CUTS=[3,6];
 $('full').innerHTML=[S.slice(0,3),S.slice(3,6),S.slice(6)].map(p=>'<p style="margin:6px 0">'+p.join(' ')+'</p>').join('');
 
+/* Банк текстов. p: части (предложения, название, неверные названия: ш — слишком широко, у — слишком узко).
+   k: [номер части для тренажёра 3, ключевые слова этой части] */
+const P=(s,m,b)=>({s,m,b});
+const T=[
+ {k:[1,['Миша','проснулся','тишины','белым','выбежал','двор','замер']],p:[
+  P(S.slice(0,3),'Ожидание первого снега',['ш:Зима','у:Бабушка улыбалась']),
+  P(S.slice(3,6),'Снежное утро',['ш:Времена года','у:Тапочки']),
+  P(S.slice(6),'Снеговик во дворе',['ш:Всё о снеге','у:Морковный нос'])]},
+ {k:[0,['Иван','Костю','рыбалку','неделю','удочку','червей','спал']],p:[
+  P(['Дед Иван давно обещал взять Костю на рыбалку.','Всю неделю мальчик проверял удочку и собирал червей.','Накануне он почти не спал.'],'Подготовка к рыбалке',['ш:Рыбалка','у:Червяки']),
+  P(['Утром они дошли до озера, когда над водой ещё стоял туман.','Дед тихо закинул удочки и велел не шуметь.','Костя сидел не шевелясь, пока не затекли ноги.'],'Тихое утро на озере',['ш:Природа','у:Туман над водой']),
+  P(['Вдруг поплавок дёрнулся и пошёл под воду.','Костя вытащил крупного окуня и закричал от радости.','Дед улыбнулся: первая рыба всегда самая вкусная.'],'Первая добыча',['ш:Рыбная ловля','у:Крик радости'])]},
+ {k:[1,['учительница','Аню','плакатом','Лена','фломастеры','увлеклись','звонок']],p:[
+  P(['Аня перешла в новую школу в середине года.','В классе её никто не знал, и на переменах она стояла у окна одна.','Дома она говорила маме, что всё хорошо.'],'Одиночество новенькой',['ш:Школа','у:Разговор с мамой']),
+  P(['На следующий день учительница попросила Аню помочь с плакатом.','Рядом оказалась Лена, у неё были лишние фломастеры.','Девочки так увлеклись, что не услышали звонок.'],'Знакомство за плакатом',['ш:Уроки','у:Лишние фломастеры']),
+  P(['Через неделю Аня уже сидела с Леной за одной партой.','Теперь переменки пролетали незаметно.','Она впервые за долгое время честно сказала маме, что у неё всё хорошо.'],'Новая подруга',['ш:Дружба','у:Школьная парта'])]},
+ {k:[1,['ельник','треск','замерли','лось','вышел','ушёл']],p:[
+  P(['Класс собрался в поход ранним субботним утром.','Учитель проверил рюкзаки и раздал карты.','Все волновались, но старались не показывать.'],'Сборы в поход',['ш:Поход','у:Карты']),
+  P(['Тропа привела ребят в густой ельник.','Вдруг впереди послышался треск, и все замерли.','Из кустов вышел лось, посмотрел на людей и спокойно ушёл.'],'Встреча с лосем',['ш:Природа','у:Треск в кустах']),
+  P(['К вечеру отряд разбил лагерь у реки.','Дежурные развели костёр и сварили кашу.','Потом долго пели песни, пока не показались звёзды.'],'Вечер в лагере',['ш:Походная жизнь','у:Каша'])]},
+ {k:[2,['подвале','писк','Рыжик','тряпке','четыре','котёнка']],p:[
+  P(['В нашем дворе жил рыжий кот по кличке Рыжик.','Он никого не подпускал к себе и обедал только у мусорных баков.'],'Дворовый кот',['ш:Животные','у:Мусорные баки']),
+  P(['Зимой ударили сильные морозы.','Рыжик исчез, и мы решили, что он замёрз.'],'Пропажа в морозы',['ш:Зима','у:Мороз']),
+  P(['Но однажды в подвале я услышал тонкий писк.','Рыжик лежал на тряпке, а рядом копошились четыре котёнка.'],'Неожиданная находка',['ш:Жизнь кота','у:Тонкий писк']),
+  P(['С тех пор мы носили ему молоко каждый день.','Кот привык к людям и даже позволил себя погладить.'],'Кот доверяет людям',['ш:Кошки и люди','у:Миска молока'])]},
+ {k:[0,['скалы','маяк','сто','кораблям','путь']],p:[
+  P(['На краю скалы стоял старый маяк.','Его построили сто лет назад, и с тех пор он указывал кораблям путь.'],'История маяка',['ш:Море','у:Скала']),
+  P(['Смотритель Павел жил там один.','Каждый вечер он поднимался по крутой лестнице и зажигал огонь.'],'Работа смотрителя',['ш:Работа','у:Крутая лестница']),
+  P(['Однажды ночью разыгрался шторм.','Павел всю ночь не отходил от фонаря, и рыбацкая лодка нашла дорогу к берегу.'],'Ночной шторм',['ш:Погода','у:Фонарь'])]},
+ {k:[1,['альбом','выпал','уроке','учителю','притих','покраснел']],p:[
+  P(['Максим любил рисовать, но стеснялся показывать рисунки.','Он прятал альбом на дне рюкзака и рисовал только дома.'],'Стеснительный художник',['ш:Искусство','у:Альбом в рюкзаке']),
+  P(['Как-то раз альбом выпал на уроке прямо под ноги учителю.','Класс притих, а Максим покраснел до ушей.'],'Неловкий случай на уроке',['ш:Школьная жизнь','у:Покрасневшие уши']),
+  P(['Учитель поднял рисунки и долго их разглядывал.','Потом предложил Максиму оформить школьную выставку.','Мальчик согласился, и стеснение прошло.'],'Предложение учителя',['ш:Учитель и ученик','у:Согласие мальчика'])]},
+ {k:[1,['общаются','свистов','щелчков','дельфин','свист','имя']],p:[
+  P(['Дельфины живут в морях и океанах по всему миру.','Они держатся стаями по двадцать-тридцать животных.'],'Где живут дельфины',['ш:Животные','у:Стая из тридцати']),
+  P(['Эти животные общаются с помощью свистов и щелчков.','Каждый дельфин имеет собственный свист, как имя.'],'Как общаются дельфины',['ш:Звуки','у:Свист как имя']),
+  P(['Дельфины очень дружелюбны к людям.','Известны случаи, когда они помогали заблудившимся морякам найти берег.'],'Дельфины и люди',['ш:Морские животные','у:Заблудившийся моряк'])]},
+ {k:[1,['поезде','двое','суток','города','поля','реки','станции']],p:[
+  P(['Семья Орловых решила провести отпуск на море.','Билеты купили за два месяца, чтобы не переплачивать.','Дети уже складывали в чемодан ласты и маски.'],'Подготовка к отпуску',['ш:Отпуск','у:Ласты и маски']),
+  P(['В поезде они ехали почти двое суток.','За окном менялись города, поля и реки.','Младший брат считал станции и записывал их в блокнот.'],'Дорога на юг',['ш:Путешествие','у:Блокнот брата']),
+  P(['Наконец поезд остановился, и в вагон ворвался солёный ветер.','На перроне их встречал дядя с букетом.','Отпуск начался.'],'Прибытие на море',['ш:Море','у:Букет дяди'])]},
+ {k:[2,['кислота','разрушает','карбонат','кальция','скорлупа','вывод']],p:[
+  P(['На уроке химии учитель принёс стакан уксуса и сырое яйцо.','Он спросил, что произойдёт, если оставить яйцо в уксусе.'],'Постановка опыта',['ш:Химия','у:Стакан уксуса']),
+  P(['Через сутки скорлупа растворилась, а яйцо стало мягким и упругим.','Оно даже слегка подпрыгивало на столе.'],'Результат опыта',['ш:Опыты','у:Подпрыгивающее яйцо']),
+  P(['Учитель объяснил, что уксусная кислота разрушает карбонат кальция.','Именно из него и состоит скорлупа.','Ребята записали вывод в тетради.'],'Объяснение явления',['ш:Кислоты','у:Записи в тетради'])]},
+ {k:[1,['четыре-четыре','Сева','пробил','мяч','улетел','забор']],p:[
+  P(['Во дворе собралась команда мальчишек для матча.','Договорились играть до пяти голов.','Вратарём поставили самого высокого.'],'Подготовка к матчу',['ш:Футбол','у:Выбор вратаря']),
+  P(['Игра шла напряжённо, счёт был четыре-четыре.','В последнюю минуту Сева пробил по воротам, но мяч улетел за забор.','Все бросились его искать.'],'Потерянный мяч',['ш:Спорт','у:Удар Севы']),
+  P(['Мяч нашли в чужом саду, и хозяин вернул его с улыбкой.','Матч доиграли уже в темноте.','Ничья всех устроила.'],'Мирный финал',['ш:Игра','у:Улыбка хозяина'])]},
+ {k:[0,['весну','сажала','цветы','тюльпаны','нарциссы','ромашки']],p:[
+  P(['Бабушка каждую весну сажала у дома цветы.','Она выбирала тюльпаны, нарциссы и ромашки.','Внуки помогали ей поливать грядки.'],'Весенняя посадка',['ш:Сад','у:Помощь внуков']),
+  P(['В июне на клумбе всё расцвело.','Прохожие останавливались и спрашивали, как ей это удаётся.','Бабушка только улыбалась и молчала.'],'Цветущий сад',['ш:Лето','у:Вопросы прохожих']),
+  P(['Осенью она собрала семена и раздала их соседям.','Теперь цветы росли на всей улице.','Бабушка говорила, что красота должна делиться.'],'Семена для соседей',['ш:Соседи','у:Слова бабушки'])]}
+];
+const NUM=['','одна граница','две границы','три границы','четыре границы'];
+
 /* 1. границы */
-(function(){const box=$('seg'),m=$('sm'),cut=new Set();
- S.forEach((t,i)=>{const s=document.createElement('span');s.className='sn';s.textContent=t+' ';s.tabIndex=0;s.setAttribute('role','button');
-  const tg=()=>{if(i===0)return;cut.has(i)?cut.delete(i):cut.add(i);s.classList.toggle('cut');m.textContent='';m.className='msg'};
-  s.onclick=tg;s.onkeydown=e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();tg()}};box.appendChild(s)});
- $('sc').onclick=()=>{const c=[...cut].sort((a,b)=>a-b),ok=c.length===2&&c[0]===CUTS[0]&&c[1]===CUTS[1];
-  m.className='msg '+(ok?'ok':'bad');
-  m.textContent=ok?'Верно! Герой тот же, но «Однажды» и «Потом» открывают новые части.':c.length!==2?'Отмечено границ: '+c.length+'. Нужно две.':'Почти. Ищи слова-сигналы и смену действия или времени.'};
- $('sr').onclick=()=>{cut.clear();box.querySelectorAll('.sn').forEach(x=>x.classList.remove('cut'));m.textContent='';m.className='msg'}})();
+(function(){const r=$('t1'),box=r.querySelector('.text'),m=r.querySelector('.msg'),cn=r.querySelector('.cnt'),ins=r.querySelector('.score'),sc=r.querySelector('.sc1');
+ let i=-1,ok=0,n=0,cut,cuts,counted,sents;
+ function load(){const t=T[i];sents=[];cuts=[];t.p.forEach((p,k)=>{if(k>0)cuts.push(sents.length);p.s.forEach(x=>sents.push(x))});
+  cut=new Set();counted=false;m.textContent='';m.className='msg';box.innerHTML='';
+  cn.textContent='Текст '+(i+1)+' из '+T.length;
+  ins.textContent='Нажимай на предложения, с которых начинается новая часть. Всего границ: '+NUM[cuts.length]+'.';
+  sents.forEach((txt,j)=>{const s=document.createElement('span');s.className='sn';s.textContent=txt+' ';s.tabIndex=0;s.setAttribute('role','button');
+   const tg=()=>{if(j===0)return;cut.has(j)?cut.delete(j):cut.add(j);s.classList.toggle('cut');m.textContent='';m.className='msg'};
+   s.onclick=tg;s.onkeydown=e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();tg()}};box.appendChild(s)})}
+ function next(){i=(i+1)%T.length;if(i===0){ok=0;n=0;sc.textContent=''}load()}
+ r.querySelector('.chk1').onclick=()=>{const c=[...cut].sort((a,b)=>a-b),good=c.length===cuts.length&&c.every((v,k)=>v===cuts[k]);
+  m.className='msg '+(good?'ok':'bad');
+  if(good)m.textContent='Верно! Части: «'+T[i].p.map(p=>p.m).join('», «')+'».';
+  else if(c.length!==cuts.length)m.textContent='Отмечено границ: '+c.length+'. Нужно: '+NUM[cuts.length]+'.';
+  else m.textContent='Почти. Ищи смену времени, места, героя или действия.';
+  if(!counted){counted=true;n++;if(good)ok++;sc.textContent='Верно с первого раза: '+ok+' из '+n}};
+ r.querySelector('.rs1').onclick=()=>{cut.clear();box.querySelectorAll('.sn').forEach(x=>x.classList.remove('cut'));m.textContent='';m.className='msg'};
+ r.querySelector('.nx1').onclick=next;next()})();
 
 /* 2. названия микротем */
-(function(){const L=[
- {q:S.slice(0,3).join(' '),o:['Ожидание первого снега','Зима','Бабушка улыбалась'],e:'«Зима» слишком широко, «Бабушка улыбалась» слишком узко: это одна деталь.'},
- {q:S.slice(3,6).join(' '),o:['Снежное утро','Времена года','Тапочки'],e:'Название должно собирать все детали абзаца: тишину, белый двор и замершего героя.'},
- {q:S.slice(6).join(' '),o:['Снеговик во дворе','Всё о снеге','Морковный нос'],e:'Нужно имя для всей части: лепка снеговика и результат.'}];
- const r=$('q1'),q=r.querySelector('.q'),o=r.querySelector('.opts'),m=r.querySelector('.msg'),sc=r.querySelector('.score');let i=-1,ok=0,n=0,done;
- function next(){i=(i+1)%L.length;const it=L[i];done=false;m.textContent='';m.className='msg';q.innerHTML='<i>'+it.q+'</i>';o.innerHTML='';
-  shuffle(it.o.slice()).forEach(t=>{const b=document.createElement('button');b.className='alt opt';b.textContent=t;
-   b.onclick=()=>{if(done)return;done=true;n++;const g=t===it.o[0];if(g)ok++;b.classList.add(g?'good':'no');m.className='msg '+(g?'ok':'bad');m.textContent=(g?'Верно! ':'Не то. Верно: «'+it.o[0]+'». ')+it.e;sc.textContent='Верно: '+ok+' из '+n};o.appendChild(b)})}
+(function(){const L=T.map((t,k)=>{const p=t.p[k%t.p.length];return{q:p.s.join(' '),good:p.m,bad:p.b}});
+ const r=$('q1'),q=r.querySelector('.q'),o=r.querySelector('.opts'),m=r.querySelector('.msg'),sc=r.querySelector('.score'),cn=r.querySelector('.cnt');let i=-1,ok=0,n=0,done;
+ function next(){i=(i+1)%L.length;if(i===0){ok=0;n=0;sc.textContent=''}const it=L[i];done=false;m.textContent='';m.className='msg';
+  cn.textContent='Вопрос '+(i+1)+' из '+L.length;q.innerHTML='<i>'+it.q+'</i>';o.innerHTML='';
+  const opts=[{t:it.good,g:true}].concat(it.bad.map(b=>({t:b.slice(2),g:false,w:b[0]==='ш'?'слишком широко: подойдёт к любой части':'слишком узко: это только одна деталь'})));
+  shuffle(opts).forEach(x=>{const b=document.createElement('button');b.className='alt opt';b.textContent=x.t;
+   b.onclick=()=>{if(done)return;done=true;n++;if(x.g)ok++;b.classList.add(x.g?'good':'no');m.className='msg '+(x.g?'ok':'bad');
+    m.textContent=x.g?'Верно! Название собирает всю часть, а не одну деталь.':'Не то: «'+x.t+'» '+x.w+'. Верно: «'+it.good+'».';
+    sc.textContent='Верно: '+ok+' из '+n};o.appendChild(b)})}
  r.querySelector('.nx').onclick=next;next()})();
 
 /* 3. ключевые слова */
-(function(){const KEY=['Миша','проснулся','тишины','белым','выбежал','двор','замер'],cl=w=>w.replace(/[.,:;!?]/g,''),
- box=$('kw'),m=$('km');
- S.slice(3,6).join(' ').split(' ').forEach(w=>{const c=document.createElement('span');c.className='chip';c.textContent=w;c.tabIndex=0;c.setAttribute('role','button');
-  const tg=()=>{c.classList.toggle('on');m.textContent='';m.className='msg'};c.onclick=tg;c.onkeydown=e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();tg()}};box.appendChild(c)});
- $('kc').onclick=()=>{const ch=[...box.children],on=ch.filter(c=>c.classList.contains('on')).map(c=>cl(c.textContent)),
+(function(){const r=$('t3'),box=r.querySelector('.kwbox'),m=r.querySelector('.msg'),cn=r.querySelector('.cnt'),sc=r.querySelector('.sc3');
+ const cl=w=>w.replace(/[.,:;!?]/g,'');let i=-1,ok=0,n=0,counted,KEY;
+ function load(){const t=T[i];KEY=t.k[1];counted=false;m.textContent='';m.className='msg';box.innerHTML='';
+  cn.textContent='Абзац '+(i+1)+' из '+T.length;
+  t.p[t.k[0]].s.join(' ').split(' ').forEach(w=>{const c=document.createElement('span');c.className='chip';c.textContent=w;c.tabIndex=0;c.setAttribute('role','button');
+   const tg=()=>{c.classList.toggle('on');m.textContent='';m.className='msg'};c.onclick=tg;c.onkeydown=e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();tg()}};box.appendChild(c)})}
+ function next(){i=(i+1)%T.length;if(i===0){ok=0;n=0;sc.textContent=''}load()}
+ r.querySelector('.chk3').onclick=()=>{const on=[...box.children].filter(c=>c.classList.contains('on')).map(c=>cl(c.textContent)),
   hit=on.filter(w=>KEY.includes(w)),extra=on.filter(w=>!KEY.includes(w)),miss=KEY.filter(w=>!on.includes(w));
-  if(!extra.length&&!miss.length){m.className='msg ok';m.textContent='Отлично! Все 7 ключевых слов найдены, лишнего нет.';return}
-  m.className='msg bad';m.textContent='Найдено: '+hit.length+' из '+KEY.length+'.'+(extra.length?' Лишнее: '+extra.join(', ')+'.':'')+(miss.length?' Пропущено: '+miss.join(', ')+'.':'')};
- $('kr').onclick=()=>{[...box.children].forEach(c=>c.classList.remove('on'));m.textContent='';m.className='msg'}})();
+  const good=!miss.length&&extra.length<=2;
+  if(good){m.className='msg ok';m.textContent=extra.length?'Хорошо! Все важные слова найдены. Лишнее: '+extra.join(', ')+'. В следующий раз попробуй обойтись без него.':'Отлично! Все '+KEY.length+' ключевых слов найдены, лишнего нет.'}
+  else{m.className='msg bad';m.textContent='Найдено: '+hit.length+' из '+KEY.length+'.'+(extra.length?' Лишнее: '+extra.join(', ')+'.':'')+(miss.length?' Пропущено: '+miss.join(', ')+'.':'')}
+  if(!counted){counted=true;n++;if(good)ok++;sc.textContent='Верно с первого раза: '+ok+' из '+n}};
+ r.querySelector('.rs3').onclick=()=>{[...box.children].forEach(c=>c.classList.remove('on'));m.textContent='';m.className='msg'};
+ r.querySelector('.nx3').onclick=next;next()})();
 
 /* 4. чтение вслух */
-(function(){const m=$('rm'),T=S.join(' ');
+(function(){const m=$('rm'),Tx=S.join(' ');
  const say=n=>{if(!('speechSynthesis' in window)){m.className='msg bad';m.textContent='Озвучка недоступна. Пусть текст прочитает учитель.';return}
-  speechSynthesis.cancel();const u=new SpeechSynthesisUtterance(T);u.lang='ru-RU';u.rate=.9;speechSynthesis.speak(u);
+  speechSynthesis.cancel();const u=new SpeechSynthesisUtterance(Tx);u.lang='ru-RU';u.rate=.9;speechSynthesis.speak(u);
   m.className='msg ok';m.textContent=n===1?'1-й раз: только слушай, не пиши.':'2-й раз: записывай микротемы и ключевые слова.'};
  $('r1').onclick=()=>say(1);$('r2').onclick=()=>say(2);$('rs').onclick=()=>{if('speechSynthesis' in window)speechSynthesis.cancel();m.textContent='';m.className='msg'}})();
 
